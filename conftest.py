@@ -1,6 +1,6 @@
 import pytest
-from methods.user_methods import UserMethods
-import generators
+from core.api.user_methods import UserMethods
+from core.utils import generators
 from selenium import webdriver
 
 @pytest.fixture
