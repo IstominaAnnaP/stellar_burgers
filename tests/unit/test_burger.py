@@ -1,20 +1,25 @@
 import pytest
 from app.burger import Burger
 from unittest.mock import Mock
+import allure
 
 class TestBurger:
+
+    @allure.title('Проверка добавления булочек в бургер')
     def test_set_buns_successful(self):
         burger = Burger()
         mock_bun = Mock()
         burger.set_buns(mock_bun)
         assert burger.bun == mock_bun
 
+    @allure.title('Проверка добавления ингредиента в бургера')
     def test_add_ingredient_successful(self):
         burger = Burger()
         mock_ingredient = Mock()
         burger.add_ingredient(mock_ingredient)
         assert len(burger.ingredients) == 1
 
+    @allure.title('Проверка удаления ингредиента из бургера')
     def test_remove_ingredient_successful(self):
         burger = Burger()
         mock_ingredient = Mock()
@@ -22,6 +27,7 @@ class TestBurger:
         burger.remove_ingredient(0)
         assert len(burger.ingredients) == 0
 
+    @allure.title('Проверка перемещения ингредиента в списке добавленных в бургер ингредиентов')
     @pytest.mark.parametrize('index,new_index', [[0, 2], [0, 0], [0, 1]])
     def test_move_ingredient_successful(self, index, new_index):
         burger = Burger()
@@ -34,6 +40,7 @@ class TestBurger:
         burger.move_ingredient(index, new_index)
         assert burger.ingredients[new_index] == mock_ingredient_1
 
+    @allure.title('Проверка получения правильной цены на собранный бургер')
     @pytest.mark.parametrize(
         'bun_price, ingredient_prices, expected_total', [
             [50.5, [], 101.0], [0.0, [], 0.0], [50.0, [15.0, 25.0, 100.0], 240], [50.0, [0.0], 100.0]
@@ -52,6 +59,7 @@ class TestBurger:
 
         assert burger.get_price() == expected_total
 
+    @allure.title('Проверка получения правильно составленного чека')
     @pytest.mark.parametrize(
         "ingredients_data, expected_result",[
             #Сценарий 1: Бургер без начинки
